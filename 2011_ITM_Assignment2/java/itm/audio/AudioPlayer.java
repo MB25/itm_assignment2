@@ -129,6 +129,7 @@ public class AudioPlayer {
 		while((bytesread = audio.read(buffer)) != -1){
 			sdl.write(buffer, 0, bytesread);
 		}
+		
 		sdl.drain(); //properly closing everything
 		sdl.close();
 		audio.close();
@@ -153,16 +154,16 @@ public class AudioPlayer {
 	 * information if required.
 	 */
 	public static void main(String[] args) throws Exception {
-		/*
+		
 		if (args.length < 1) {
 			System.out
 					.println("usage: java itm.audio.AudioPlayer <input-audioFile>");
 			System.exit(1);
 		}
 		File fi = new File(args[0]);
-		*/
+		
 		AudioPlayer player = new AudioPlayer();
-		player.playAudio(new File("C:/Users/Ulla/Desktop/Epoq-Lepidoptera.ogg"));
+		player.playAudio(new File(args[0]));
 		System.exit(0);
 
 	}
