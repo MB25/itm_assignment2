@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" output="build" path="java"/>
+	<classpathentry kind="var" path="JRE_LIB" rootpath="JRE_SRCROOT" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/commons-cli.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/jl1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/jmf.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/logback-classic.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/logback-core.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/prefuse.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/slf4j-api.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/tritonus_aos-0.3.6.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/tritonus_dsp-0.3.6.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/vorbisspi1.0.2.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/xuggle-xuggler-test.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/itm_a2_UE/lib/xuggle-xuggler.jar"/>
+	<classpathentry kind="lib" path="/Users/Markus/.p2/pool/plugins/org.eclipse.equinox.launcher_1.3.100.v20150511-1540.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,45 @@
+
+clean-thumbs:
+     [echo] Deleting thumbnail directory /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/thumbnails and /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/media/md if existing
+
+clean-build:
+     [echo] Deleting build directory /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build and /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/WEB-INF/classes if existing
+
+clean:
+
+init:
+    [mkdir] Created dir: /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build
+
+compile:
+    [javac] /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/2016_ITM_UE/build.xml:45: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds
+    [javac] Compiling 18 source files to /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build
+
+build:
+      [jar] Building jar: /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/WEB-INF/lib/itm.jar
+     [copy] Copying 1 file to /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/infovis
+BUILD SUCCESSFUL
+
+BUILD SUCCESSFUL
+
+clean-thumbs:
+     [echo] Deleting thumbnail directory /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/thumbnails and /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/media/md if existing
+
+clean-build:
+     [echo] Deleting build directory /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build and /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/WEB-INF/classes if existing
+   [delete] Deleting directory /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build
+
+clean:
+
+init:
+    [mkdir] Created dir: /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build
+
+compile:
+    [javac] /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/2016_ITM_UE/build.xml:45: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds
+    [javac] Compiling 18 source files to /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/build
+
+build:
+      [jar] Building jar: /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/WEB-INF/lib/itm.jar
+     [copy] Copying 1 file to /Users/Markus/Dropbox/UNI/Semester 4/ITM/UE/assignment2/itm_skeleton_a2_SS16/assignment2/webapps/itm/infovis
+BUILD SUCCESSFUL
+
+BUILD SUCCESSFUL
