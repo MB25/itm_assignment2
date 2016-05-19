@@ -160,9 +160,9 @@ public class AudioThumbGenerator {
 		AudioFormat decoded = new AudioFormat(
 			AudioFormat.Encoding.PCM_SIGNED,
 			format.getSampleRate(),
-			16,									//
-			format.getChannels(),				//2
-			format.getChannels()*2,				//4
+			16,									
+			format.getChannels(),				
+			format.getChannels()*2,				
 			format.getSampleRate(),
 			false);
 		AudioInputStream din = AudioSystem.getAudioInputStream(decoded, input);

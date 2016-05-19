@@ -14,11 +14,8 @@
 	<classpathentry kind="lib" path="lib/tritonus_aos-0.3.6.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_dsp-0.3.6.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_share.jar"/>
-	<classpathentry kind="lib" path="lib/vorbisspi1.0.2.jar"/>
-	<classpathentry kind="lib" path="lib/xuggle-xuggler-test.jar"/>
-	<classpathentry kind="lib" path="lib/xuggle-xuggler.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ulla/Downloads/tritonus_share-0.3.6.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ulla/Downloads/j-ogg/build/lib/j-ogg-vorbisd.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Ulla/Downloads/tritonus_jorbis-0.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ulla/git/ITM_Assignment2/2011_ITM_Assignment2/lib/xuggle-xuggler-5.4.jar"/>
+	<classpathentry kind="lib" path="lib/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ulla/git/ITM_Assignment2/2011_ITM_Assignment2/lib/tritonus_jorbis-0.3.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

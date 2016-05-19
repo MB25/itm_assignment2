@@ -84,14 +84,13 @@ public class AudioPlayer {
 		AudioInputStream din = null;
 		AudioInputStream in = AudioSystem.getAudioInputStream(input); //gets audioinputstream from the input
 		AudioFormat format = in.getFormat();
-		System.out.println("Hi " + format.getEncoding().toString());
 		if(!(format.getEncoding().toString().equals("PMC_SIGNED"))){ //if not wav (pcm signed) it will be converted
 			AudioFormat decoded = new AudioFormat(
 					AudioFormat.Encoding.PCM_SIGNED,//setting up format for raw audio file
 					format.getSampleRate(), 
-					16, 
-					format.getChannels(),
-					format.getChannels()*2, 
+					16, //16 bit pcm
+					format.getChannels(), 
+					format.getChannels()*2, //da stereochannel 
 					format.getSampleRate(), 
 					false);
 			din = AudioSystem.getAudioInputStream(decoded, in);
@@ -134,20 +133,7 @@ public class AudioPlayer {
 		sdl.drain(); //properly closing everything
 		sdl.close();
 		audio.close();
-		
-		
-		
-		// ***************************************************************
-		// Fill in your code here!
-		// ***************************************************************
 
-		// get audio format
-		
-		// get a source data line
-		
-		// read samples from audio and write them to the data line 
-
-		// properly close the line!
 	}
 
 	/**
