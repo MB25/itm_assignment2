@@ -84,19 +84,20 @@ public class AudioPlayer {
 		AudioInputStream din = null;
 		AudioInputStream in = AudioSystem.getAudioInputStream(input); //gets audioinputstream from the input
 		AudioFormat format = in.getFormat();
-		AudioFormat decoded = new AudioFormat(
-				AudioFormat.Encoding.PCM_SIGNED,//setting up format for raw audio file
-				format.getSampleRate(), 
-				16, 
-				format.getChannels(),
-				format.getChannels()*2, 
-				format.getSampleRate(), 
-				false);
-		
-		din = AudioSystem.getAudioInputStream(decoded, in);
-		
- 
-		return din;
+		System.out.println("Hi " + format.getEncoding().toString());
+		if(!(format.getEncoding().toString().equals("PMC_SIGNED"))){ //if not wav (pcm signed) it will be converted
+			AudioFormat decoded = new AudioFormat(
+					AudioFormat.Encoding.PCM_SIGNED,//setting up format for raw audio file
+					format.getSampleRate(), 
+					16, 
+					format.getChannels(),
+					format.getChannels()*2, 
+					format.getSampleRate(), 
+					false);
+			din = AudioSystem.getAudioInputStream(decoded, in);
+			return din;
+		}
+		return in;
 	}
 
 	/**
@@ -163,7 +164,7 @@ public class AudioPlayer {
 		File fi = new File(args[0]);
 		
 		AudioPlayer player = new AudioPlayer();
-		player.playAudio(new File(args[0]));
+		player.playAudio(fi);
 		System.exit(0);
 
 	}

@@ -7,8 +7,20 @@ package itm.audio;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 
 /**
  * 
@@ -21,6 +33,8 @@ import java.util.ArrayList;
  * 
  * If the input file or the output directory do not exist, an exception is
  * thrown.
+ * 
+ * @author Markus Bader 1404709
  */
 
 public class AudioThumbGenerator {
@@ -113,19 +127,46 @@ public class AudioThumbGenerator {
 			throw new IOException(output + " is not a directory!");
 
 		File outputFile = new File(output, input.getName() + ".wav");
-
-
-		// ***************************************************************
-		// Fill in your code here!
-		// ***************************************************************
-
-		// load the input audio file
-
-		// cut the audio data in the stream to a given length
-
-		// save the acoustic thumbnail as WAV file
+		AudioFormat format = null;
+		AudioInputStream cropped = null;
+		try{
+			AudioInputStream in = AudioSystem.getAudioInputStream(input);
+			format = in.getFormat();
+			System.out.println("format: " + in.getFormat().getEncoding());
+			if(!(in.getFormat().getEncoding().equals("PCM_SIGNED"))){ //same as in Audioplayer. If PCM_SIGNED (wav) it won't be converted, if not (mp3, ogg) 
+				in = convert(in);
+				
+			}
+			format = in.getFormat();
+							
+			cropped = new AudioInputStream(in,format,(int) (format.getFrameRate()*thumbNailLength)); //fps*seconds = end of clip/length of thumbnail
+			////http://stackoverflow.com/questions/7462754/cutting-a-wave-file
+			
+		}catch (UnsupportedAudioFileException e) {
+			System.out.println("Audioformat not supported " + e.getMessage());
+		}
+	
+		AudioSystem.write(cropped, AudioFileFormat.Type.WAVE, outputFile);			//writes stream as wav to outputfile
+		
+		cropped.close();
 
 		return outputFile;
+	}
+	
+
+	protected AudioInputStream convert(AudioInputStream input){
+		
+		AudioFormat format = input.getFormat(); //same conversion as in audioplayer
+		AudioFormat decoded = new AudioFormat(
+			AudioFormat.Encoding.PCM_SIGNED,
+			format.getSampleRate(),
+			16,									//
+			format.getChannels(),				//2
+			format.getChannels()*2,				//4
+			format.getSampleRate(),
+			false);
+		AudioInputStream din = AudioSystem.getAudioInputStream(decoded, input);
+		return din;
 	}
 
 	/**

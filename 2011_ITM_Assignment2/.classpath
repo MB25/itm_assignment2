@@ -9,7 +9,6 @@
 	<classpathentry kind="lib" path="lib/jorbis-0.0.15.jar"/>
 	<classpathentry kind="lib" path="lib/logback-classic.jar"/>
 	<classpathentry kind="lib" path="lib/logback-core.jar"/>
-	<classpathentry kind="lib" path="lib/mp3spi1.9.4.jar"/>
 	<classpathentry kind="lib" path="lib/prefuse.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/tritonus_aos-0.3.6.jar"/>
@@ -18,5 +17,8 @@
 	<classpathentry kind="lib" path="lib/vorbisspi1.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/xuggle-xuggler-test.jar"/>
 	<classpathentry kind="lib" path="lib/xuggle-xuggler.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ulla/Downloads/tritonus_share-0.3.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ulla/Downloads/j-ogg/build/lib/j-ogg-vorbisd.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ulla/Downloads/tritonus_jorbis-0.3.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
