@@ -5,6 +5,10 @@ package itm.video;
  (c) University of Vienna 2009-2016
  *******************************************************************************/
 
+import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
+import itm.util.DecodeAndCaptureFrame;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -95,6 +99,13 @@ public class VideoFrameGrabber {
 		File outputFile = new File(output, input.getName() + "_thumb.jpg");
 		// load the input video file
 
+		IContainer container = IContainer.make();
+		IContainerFormat format = IContainerFormat.make();
+
+		if (container.open(input.getAbsoluteFile().toString(), IContainer.Type.READ, format) < 0)
+			throw new IllegalArgumentException("could not open file: " + input.getAbsoluteFile());
+
+		new DecodeAndCaptureFrame(input.getAbsolutePath(), outputFile, container.getDuration() / 2);
 		// ***************************************************************
 		// Fill in your code here!
 		// ***************************************************************

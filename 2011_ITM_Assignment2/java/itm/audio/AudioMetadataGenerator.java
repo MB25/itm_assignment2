@@ -8,9 +8,17 @@ package itm.audio;
 import itm.model.AudioMedia;
 import itm.model.MediaFactory;
 
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+
+import org.tritonus.share.sampled.TAudioFormat;
+import org.tritonus.share.sampled.file.TAudioFileFormat;
 
 /**
  * This class reads audio files of various formats and stores some basic audio
@@ -133,25 +141,52 @@ public class AudioMetadataGenerator {
 				return media;
 			}
 
-		
-		// ***************************************************************
-		// Fill in your code here!
-		// ***************************************************************
 
 		// create an audio metadata object
-		AudioMedia media = (AudioMedia) MediaFactory.createMedia(input);		
+		AudioMedia media = (AudioMedia) MediaFactory.createMedia(input);
+		String fileExtension = MediaFactory.getFileExtension(input);
 
-		// load the input audio file, do not decode
+		AudioFileFormat baseFileFormat;
+		AudioFormat baseFormat;
+		try {
+			baseFileFormat = AudioSystem.getAudioFileFormat(input);
+			baseFormat = baseFileFormat.getFormat();
 
-		// read AudioFormat properties
+			if (baseFileFormat instanceof TAudioFileFormat) {
+				Map properties = ((TAudioFileFormat)baseFileFormat).properties();
 
-		// read file-type specific properties
+				media.setAuthor((String) properties.get("author"));
+				media.setComment((String) properties.get("comment"));
+				media.setYear((String) properties.get("date"));
+				media.setTitle((String) properties.get("title"));
+				media.setAlbum((String) properties.get("album"));
+				media.setDuration((Long) properties.get("duration"));
 
-		// you might have to distinguish what properties are available for what audio format
+				if(fileExtension.equals("mp3")) {
+					media.setComposer((String) properties.get("mp3.id3tag.composer"));
+					media.setGenre((String) properties.get("mp3.id3tag.genre"));
+					media.setTrack((String) properties.get("mp3.id3tag.track"));
 
-		// add a "audio" tag
+				} else if(fileExtension.equals("ogg")) {
+					media.setTrack((String) properties.get("ogg.comment.track"));
+					media.setGenre((String) properties.get("ogg.comment.genre"));
+				}
+			}
 
-		// close the audio and write the md file.
+			if (baseFormat instanceof TAudioFormat) {
+				Map properties = ((TAudioFormat)baseFormat).properties();
+
+				media.setBitrate((int) properties.get("bitrate"));
+				media.setChannels(baseFormat.getChannels());
+				media.setFrequency(baseFormat.getSampleRate());
+				media.setEncoding(baseFormat.getEncoding().toString());
+			}
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
+
+		media.addTag("audio");
+		media.writeToFile(outputFile);
 
 		return media;
 	}

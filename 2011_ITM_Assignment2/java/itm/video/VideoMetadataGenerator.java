@@ -5,6 +5,7 @@ package itm.video;
  (c) University of Vienna 2009-2016
  *******************************************************************************/
 
+import com.xuggle.xuggler.*;
 import itm.model.MediaFactory;
 import itm.model.VideoMedia;
 
@@ -22,9 +23,6 @@ import javax.media.format.AudioFormat;
 import javax.media.format.VideoFormat;
 import javax.media.protocol.DataSource;
 
-import com.xuggle.xuggler.IContainer;
-import com.xuggle.xuggler.IStream;
-import com.xuggle.xuggler.IStreamCoder;
 import com.xuggle.xuggler.ICodec.Type;
 
 /**
@@ -138,20 +136,52 @@ public class VideoMetadataGenerator {
 				return media;
 			}
 
-		// ***************************************************************
-		// Fill in your code here!
-		// ***************************************************************
-		
-		
-		// create video media object
+// create video media object
 		VideoMedia media = (VideoMedia) MediaFactory.createMedia(input);
 
-		// set video and audio stream metadata 
-		
-		// add video tag
+		IContainer container = IContainer.make();
+		IContainerFormat format = IContainerFormat.make();
 
-		// write metadata
-		
+		if (container.open(input.getAbsoluteFile().toString(), IContainer.Type.READ, format) < 0)
+			throw new IllegalArgumentException("could not open file: " + input.getAbsoluteFile());
+
+		int numStreams = container.getNumStreams();
+
+		for(int i = 0; i < numStreams; i++) {
+
+			// Find the stream object
+			IStream stream = container.getStream(i);
+			// Get the pre-configured decoder that can decode this stream;
+			IStreamCoder coder = stream.getStreamCoder();
+
+			if (coder.getCodecType() == ICodec.Type.CODEC_TYPE_AUDIO) {
+				media.setCodecAudio(coder.getCodec().getName());
+				media.setCodecAudioId(coder.getCodecID().name());
+				media.setChannels(coder.getChannels());
+				media.setSampleRate(coder.getSampleRate());
+				media.setBitrate(coder.getBitRate());
+
+			} else if (coder.getCodecType() == ICodec.Type.CODEC_TYPE_VIDEO) {
+				media.setCodecVideo(coder.getCodec().getName());
+				media.setCodecVideoId(coder.getCodecID().name());
+				media.setFrameRate(coder.getFrameRate().getDouble());
+				media.setDuration(container.getDuration());
+				media.setWidth(coder.getWidth());
+				media.setHeight(coder.getHeight());
+
+				long duration = container.getDuration();
+				double frameRate = coder.getFrameRate().getDouble();
+
+				int allFrames = (int) (duration/1000000 * frameRate);
+
+				System.out.println("allFrames = " + allFrames);
+				System.out.println("middleFrame = " + allFrames / 2);
+			}
+		}
+
+		media.addTag("video");
+		media.writeToFile(outputFile);
+
 		return media;
 	}
 

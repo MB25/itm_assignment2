@@ -27,7 +27,15 @@ Task 2.3: extract/get audio metadata
 * How is volume (i.e., how loud a sound is) reflected in analog and 
 digital audio signals? Why does it make sense to perform non-uniform quantization?
 
+Amplitude refers to the strength of a sound wave, which the human ear interprets as volume or loudness
+Adaptive DPCM is a variant of DPCM that varies the size of the quantization step,
+to allow further reduction of the required bandwidth for a given signal-to-noise ratio (compares the level of a desired signal to the level of background noise).
+
 * What is Pulse Code Modulation (PCM)?
+
+Pulse Code Modulation is a method to transform analog audio signals into digital, so they can be transmitted over the wire.
+In a PCM stream, the amplitude of the analog signal is sampled regularly in intervals,
+and each sample is quantized to the nearest value within a range of digital steps.
 
 ----------------------------------------------------------
 Task 2.4: extract meta data from video files
@@ -38,9 +46,14 @@ Task 2.5: extract frames from video files
 ----------------------------------------------------------
 
 * What is (de­)multiplexing? What is a codec?
+Multiplexing: Combining multiple analog or digital signals into one signal  (several telephone calls over same wire)
+Demultiplexing: Takes a single input signal and produces one to many output lines.
+Codec: Is a device or program that compresses data to enable faster transmission and decompresses received data
 
-* In what color space are images usually represented in video files? 
+* In what color space are images usually represented in video files?
+YCbCr
 What color space is usually used for computer images?
+RGB
 
 ----------------------------------------------------------
 Task 2.6: video thumbnail

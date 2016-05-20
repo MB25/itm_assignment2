@@ -102,19 +102,6 @@ public class MediaFactory {
 
 	/**
 	 * Loads all media objects from the passed directory.
-	 * 
-	 * @param imageDir
-	 *            this directory should contain all the image files handled by
-	 *            this application.
-	 * @param audioDir
-	 *            this directory should contain all the audio files handled by
-	 *            this application.
-	 * @param videoDir
-	 *            this directory should contain all the video files handled by
-	 *            this application.
-	 * @param metadataDir
-	 *            this directory should contain all metadata files that describe
-	 *            the media objects.
 	 */
     protected static ArrayList<AbstractMedia> loadMedia() throws IOException
     {
@@ -164,7 +151,7 @@ public class MediaFactory {
 			throw new IOException(
 					"Could not determine what object to create from filename!");
 
-		String ext = name.substring(name.lastIndexOf(".") + 1).toLowerCase();
+		String ext = getFileExtension(f);
 
 		// If passed file is a textfile: load metadata from file
 		if (ext.equals("txt")) {
@@ -200,6 +187,16 @@ public class MediaFactory {
 		throw new IOException(
 				"Could not determine what object to create from filename extension "
 						+ ext);
+	}
+
+	public static String getFileExtension(File f) throws IOException {
+		String name = f.getName();
+		if (!name.contains(".")) {
+			throw new IOException(
+					"Could not determine what object to create from filename!");
+		}
+
+		return name.substring(name.lastIndexOf(".") + 1).toLowerCase();
 	}
 
 	/**
