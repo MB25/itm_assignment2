@@ -21,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.xuggle.mediatool.IMediaListener;
 import com.xuggle.mediatool.IMediaReader;
@@ -51,12 +52,15 @@ import com.xuggle.xuggler.video.ConverterFactory;
  */
 public class VideoThumbnailGenerator {
 	
-	ArrayList<BufferedImage> frameList = new ArrayList<BufferedImage>();
+	List<BufferedImage> frameList;
+	DecodeAndCaptureFrame frameGrabber;
 	
 	/**
 	 * Constructor.
 	 */
 	public VideoThumbnailGenerator() {
+		this.frameGrabber = new DecodeAndCaptureFrame();
+		this.frameList = new ArrayList<>();
 	}
 
 	/**
@@ -135,11 +139,21 @@ public class VideoThumbnailGenerator {
 			throw new IOException(output + " is not a directory!");
 
 		// create output file and check whether it already exists.
-		//File outputFile = new File(output, input.getName() + "_thumb.avi");
+		File outputFile = new File(output, input.getName() + "_thumb.avi");
+
+
+		this.frameGrabber.init(input.getAbsolutePath());
+		this.frameList = this.frameGrabber.getFramesByInterval(timespan);
+
+		System.out.println("frameList.length: " + this.frameList.size());
+
+		// ***************************************************************
+		// Fill in your code here!
+		// ***************************************************************
 		
 		//Getting IMediaReader 
 		//
-		VideoMedia media = (VideoMedia) MediaFactory.createMedia(input);
+		/*VideoMedia media = (VideoMedia) MediaFactory.createMedia(input);
 		IContainer container = IContainer.make();
 		IContainerFormat format = IContainerFormat.make();
 
@@ -158,10 +172,8 @@ public class VideoThumbnailGenerator {
 			outputFile = new File(output, input.getName() + "_thumb" +i + ".avi");
 			new DecodeAndCaptureFrame(input.getAbsolutePath(), outputFile, interval);
 			interval +=interval;
-		}
-		//Zum Testen
-		//Macht 4 AVI Dateien von der jeweiligen Stelle..
-		//Ohne speichern möglich, ums dann weiterzuverarbeiten?
+		}*/
+
 		
 		return outputFile;
 	}

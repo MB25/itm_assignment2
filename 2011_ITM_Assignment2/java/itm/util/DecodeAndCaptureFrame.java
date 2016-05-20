@@ -9,37 +9,60 @@ import com.xuggle.xuggler.Global;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DecodeAndCaptureFrame extends MediaListenerAdapter
 {
-
-    public static final double SECONDS_BETWEEN_FRAMES = 1;
-    public static final long MICRO_SECONDS_BETWEEN_FRAMES = (long)(Global.DEFAULT_PTS_PER_SECOND * SECONDS_BETWEEN_FRAMES);
-
     //Time of last frame write.
-    private static long mLastPtsWrite = Global.NO_PTS;
+    private long mLastPtsWrite;
+    private int mVideoStreamIndex;
 
-    private static int mVideoStreamIndex = -1;
+    private long microSecondsBetweenFrame;
 
     private File outFile;
     private long captureTime;
-    private boolean gotMiddleFrame = false;
 
+    private boolean captureMiddleFrame;
+    private boolean gotMiddleFrame;
 
-    public DecodeAndCaptureFrame(String filename, File outputFile, long captureTime) {
+    private List<BufferedImage> capturedFrames;
 
-        this.outFile = outputFile;
-        this.captureTime = captureTime;
+    private IMediaReader reader;
+
+    public DecodeAndCaptureFrame() {}
+
+    public void init(String filename) {
+
+        this.mVideoStreamIndex          = -1;
+        this.mLastPtsWrite              = Global.NO_PTS;
+        this.microSecondsBetweenFrame   = Global.DEFAULT_PTS_PER_SECOND;
+        this.capturedFrames             = new ArrayList<>();
+        this.captureMiddleFrame         = false;
+        this.gotMiddleFrame             = false;
 
         // create a media reader for processing video
-        IMediaReader reader = ToolFactory.makeReader(filename);
+        this.reader = ToolFactory.makeReader(filename);
+        this.reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
+        this.reader.addListener(this);
+    }
 
-        reader.setBufferedImageTypeToGenerate(BufferedImage.TYPE_3BYTE_BGR);
-        reader.addListener(this);
+    public void captureMiddleFrame(File outputFile, long captureTime) {
+        this.outFile = outputFile;
+        this.captureTime = captureTime;
+        this.captureMiddleFrame = true;
 
-        // read out the contents of the media file
-        // abort if middle frame captured
         while (reader.readPacket() == null && !gotMiddleFrame);
+    }
+
+    public List<BufferedImage> getFramesByInterval(int interval) {
+        // set interval
+        this.microSecondsBetweenFrame = (Global.DEFAULT_PTS_PER_SECOND * interval);
+
+        // read packets
+        while (reader.readPacket() == null);
+
+        return capturedFrames;
     }
     
     
@@ -60,20 +83,33 @@ public class DecodeAndCaptureFrame extends MediaListenerAdapter
             // if uninitialized, backdate mLastPtsWrite so we get the very
             // first frame
             if (mLastPtsWrite == Global.NO_PTS)
-                mLastPtsWrite = event.getTimeStamp() - MICRO_SECONDS_BETWEEN_FRAMES;
+                mLastPtsWrite = event.getTimeStamp() - microSecondsBetweenFrame;
 
-            // if it's time to write the next frame
 
-            if (event.getTimeStamp() - mLastPtsWrite >= this.captureTime) {
+            if(this.captureMiddleFrame) {
 
-                // write image to file
-                ImageIO.write(event.getImage(), "jpg", this.outFile);
-                
-                // update last write time
-                mLastPtsWrite += MICRO_SECONDS_BETWEEN_FRAMES;
+                // only capture middle frame
+                if (event.getTimeStamp() - mLastPtsWrite >= this.captureTime) {
 
-                // set flag to finish
-                this.gotMiddleFrame = true;
+                    // write image to file
+                    ImageIO.write(event.getImage(), "jpg", this.outFile);
+
+                    // update last write time
+                    mLastPtsWrite += microSecondsBetweenFrame;
+
+                    // set flag to finish
+                    this.gotMiddleFrame = true;
+                }
+            } else {
+                // capture frames according to interval
+                if (event.getTimeStamp() - mLastPtsWrite >= microSecondsBetweenFrame) {
+
+                    // write image to file
+                    this.capturedFrames.add(event.getImage());
+
+                    // update last write time
+                    mLastPtsWrite += microSecondsBetweenFrame;
+                }
             }
         }
         catch (Exception e) {

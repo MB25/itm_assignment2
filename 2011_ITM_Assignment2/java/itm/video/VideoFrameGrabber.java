@@ -25,10 +25,13 @@ import java.util.ArrayList;
 
 public class VideoFrameGrabber {
 
+    DecodeAndCaptureFrame frameGrabber;
+
 	/**
 	 * Constructor.
 	 */
 	public VideoFrameGrabber() {
+        this.frameGrabber = new DecodeAndCaptureFrame();
 	}
 
 	/**
@@ -105,10 +108,8 @@ public class VideoFrameGrabber {
 		if (container.open(input.getAbsoluteFile().toString(), IContainer.Type.READ, format) < 0)
 			throw new IllegalArgumentException("could not open file: " + input.getAbsoluteFile());
 
-		new DecodeAndCaptureFrame(input.getAbsolutePath(), outputFile, container.getDuration() / 2);
-		// ***************************************************************
-		// Fill in your code here!
-		// ***************************************************************
+		frameGrabber.init(input.getAbsolutePath());
+		frameGrabber.captureMiddleFrame(outputFile, container.getDuration() / 2);
 
 		return outputFile;
 
