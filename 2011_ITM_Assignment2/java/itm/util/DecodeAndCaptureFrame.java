@@ -41,7 +41,8 @@ public class DecodeAndCaptureFrame extends MediaListenerAdapter
         // abort if middle frame captured
         while (reader.readPacket() == null && !gotMiddleFrame);
     }
-
+    
+    
     /**
      * Called after a video frame has been decoded from a media stream.
      */
@@ -67,7 +68,7 @@ public class DecodeAndCaptureFrame extends MediaListenerAdapter
 
                 // write image to file
                 ImageIO.write(event.getImage(), "jpg", this.outFile);
-
+                
                 // update last write time
                 mLastPtsWrite += MICRO_SECONDS_BETWEEN_FRAMES;
 

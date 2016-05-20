@@ -1,15 +1,40 @@
 package itm.video;
 
+import itm.model.MediaFactory;
+import itm.model.VideoMedia;
+import itm.util.DecodeAndCaptureFrame;
+
 /*******************************************************************************
  This file is part of the ITM course 2016
  (c) University of Vienna 2009-2016
+@author Markus Bader 1404709
+Does not correctly yet
+
  *******************************************************************************/
 
 import itm.util.ImageCompare;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import com.xuggle.mediatool.IMediaListener;
+import com.xuggle.mediatool.IMediaReader;
+import com.xuggle.mediatool.ToolFactory;
+import com.xuggle.xuggler.ICodec;
+import com.xuggle.xuggler.IContainer;
+import com.xuggle.xuggler.IContainerFormat;
+import com.xuggle.xuggler.IIndexEntry;
+import com.xuggle.xuggler.IPacket;
+import com.xuggle.xuggler.IStream;
+import com.xuggle.xuggler.IStreamCoder;
+import com.xuggle.xuggler.IVideoPicture;
+import com.xuggle.xuggler.IVideoResampler;
+import com.xuggle.xuggler.video.ConverterFactory;
 
 /**
  * This class reads video files, extracts metadata for both the audio and the
@@ -25,7 +50,9 @@ import java.util.ArrayList;
  * thrown.
  */
 public class VideoThumbnailGenerator {
-
+	
+	ArrayList<BufferedImage> frameList = new ArrayList<BufferedImage>();
+	
 	/**
 	 * Constructor.
 	 */
@@ -108,8 +135,38 @@ public class VideoThumbnailGenerator {
 			throw new IOException(output + " is not a directory!");
 
 		// create output file and check whether it already exists.
-		File outputFile = new File(output, input.getName() + "_thumb.avi");
+		//File outputFile = new File(output, input.getName() + "_thumb.avi");
+		
+		//Getting IMediaReader 
+		//
+		VideoMedia media = (VideoMedia) MediaFactory.createMedia(input);
+		IContainer container = IContainer.make();
+		IContainerFormat format = IContainerFormat.make();
 
+		//DecodeAndCaptureFrame dcf = null;
+		if (container.open(input.getAbsoluteFile().toString(), IContainer.Type.READ, format) < 0)
+			throw new IllegalArgumentException("could not open file: " + input.getAbsoluteFile());
+		long duration = container.getDuration(); //microseconds. divide by 1000^2 for s
+		int dur_in_sec = (int) duration/(1000*1000);
+		int allFrames;
+		long interval = timespan*1000*1000;
+		double frameRate;
+		int numStreams = container.getNumStreams();
+		int vidstream;
+		File outputFile = new File(output, input.getName() + "_thumb");
+		for(int i = 0; i<3; i++){
+			outputFile = new File(output, input.getName() + "_thumb" +i + ".avi");
+			new DecodeAndCaptureFrame(input.getAbsolutePath(), outputFile, interval);
+			interval +=interval;
+		}
+		//Zum Testen
+		//Macht 4 AVI Dateien von der jeweiligen Stelle..
+		//Ohne speichern möglich, ums dann weiterzuverarbeiten?
+		
+		return outputFile;
+	}
+		
+	
 		// ***************************************************************
 		// Fill in your code here!
 		// ***************************************************************
@@ -130,8 +187,26 @@ public class VideoThumbnailGenerator {
 		
 		// Close the writer
 
-		return outputFile;
-	}
+
+
+	
+	protected BufferedImage watermark(BufferedImage img){ //From Assignment 1
+    	BufferedImage watermark = new BufferedImage(img.getWidth(), img.getHeight(),
+    	        BufferedImage.TYPE_INT_RGB);
+    	        
+    	        Graphics g = watermark.getGraphics();
+    	        g.drawImage(img, 0, 0, null);
+    	        g.setFont(new Font("Arial", Font.BOLD, img.getHeight()/3));
+    	        Color c = new Color(255,0,0,120);
+    	        
+    	        
+    	        g.setColor(c);
+    	        String s = "Uni Wien";
+    	        g.drawString(s, 0, img.getHeight());
+    	        g.dispose();
+    	        return watermark;
+    	        
+    }
 
 	/**
 	 * Main method. Parses the commandline parameters and prints usage

@@ -12,13 +12,33 @@ Task 2.1: play (encoded) audio files
 audio. Explain how sampling works and the meaning of the terms amplitude, 
 sampling frequency, and quantization.
 
+In it's natural wave sound is a wave. For our computer to use it, it must be converted into digital form (a sequence of numbers).  
+This is called quantization.  
+First the wave is sampled in the voltage/amplitude dimension. This means, that the value of the amplitude is measured in evenly spaced intervals (=sampling frequency).  
+Amplitude corresponds to the loudness, while frequency of a sound determines the pitch.  
+
+
+
+
 ------------------------------------------------------------------------------
 Task 2.2: generate "thumbnails" from audio files
 ------------------------------------------------------------------------------
 
 * Why do WAV files require more storage space than MP3 files?
 
+MP3 uses lossy compression, while WAV files are uncompressed. 
+So depending on the quality of the MP3, the difference in bitrate is noticable. 
+The WAV file will sound clearer. 
+
+
+
+
 * In the Java Sound API: what is a sample, what is a frame?
+
+Sample: digital value, representing the amplitude of the previously quantisized soundwave at specific time.   
+frame: set of samples, if more than one channel (mono, stereo) 
+
+
 
 ----------------------------------------------------------
 Task 2.3: extract/get audio metadata
